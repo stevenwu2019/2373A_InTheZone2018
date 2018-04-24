@@ -232,17 +232,12 @@ void segDriveWithLeft(float maxLeftPower, float maxRightPower, int encoderDist) 
 		motor[leftFrontMid] = desiredLeftPower;
 		motor[rightBack] = desiredRightPower;
 		motor[rightFrontMid] = desiredRightPower;
-		//can add in pid here
-		//right side faster than left, so target is left side speed
-		//left side remains constant, only adjust right side (master-clone pid control)
-
 		sleep(20); //50 Hz data collection
 	}
 	motor[leftBack] = maxLeftPower; //turn into own function
 	motor[leftFrontMid] = maxLeftPower;
 	motor[rightBack] = maxRightPower;
 	motor[rightFrontMid] = maxRightPower;
-	//Iterm = 0;
 	while(abs((leftDist)) < 0.7*abs(encoderDist)) //trap in while loop until escape conditions are met
 	{
 		leftDist = abs(SensorValue[leftDrive]);
@@ -250,19 +245,16 @@ void segDriveWithLeft(float maxLeftPower, float maxRightPower, int encoderDist) 
 
 		sleep(20); //50 Hz data collection
 	} //WIP
-	//Iterm = 0;
 	while(abs(leftDist) < 0.15*abs(encoderDist)) //trap in while loop until escape conditions are met
 	{
 		leftDist = abs(SensorValue[leftDrive]);
 		rightDist = abs(SensorValue[rightDrive]);
 		desiredLeftPower = ((1 - ((abs(leftDist)) / (0.15*abs(encoderDist)))) + 0.1) * maxLeftPower;
 		desiredRightPower = ((1 - ((abs(leftDist)) / (0.15*abs(encoderDist)))) + 0.1) * maxRightPower;
-		//float rightPower = desiredPower;
 		motor[leftBack] = maxLeftPower; //turn into own function
 		motor[leftFrontMid] = maxLeftPower;
 		motor[rightBack] = maxRightPower;
 		motor[rightFrontMid] = maxRightPower;
-
 		sleep(20); //50 Hz data collection
 	}
 	motor[leftBack] = 0; //turn into own function
@@ -286,40 +278,31 @@ void segDriveWithRight(float maxLeftPower, float maxRightPower, int encoderDist)
 	while(abs(rightDist) < 0.15*abs(encoderDist)) //trap in while loop until escape conditions are met
 	{
 		rightDist = abs(SensorValue[rightDrive]);
-		//rightDist = abs(SensorValue[rightDrive]);
 		desiredLeftPower = (0.4 + ((abs(leftDist)) / (0.15*abs(encoderDist)))) * maxLeftPower;
 		desiredRightPower = (0.4 + ((abs(leftDist)) / (0.15*abs(encoderDist)))) * maxRightPower;
-		//float rightPower = desiredPower;
 		motor[leftBack] = desiredLeftPower; //turn into own function
 		motor[leftFrontMid] = desiredLeftPower;
 		motor[rightBack] = desiredRightPower;
 		motor[rightFrontMid] = desiredRightPower;
-		//can add in pid here
-		//right side faster than left, so target is left side speed
-		//left side remains constant, only adjust right side (master-clone pid control)
-
 		sleep(20); //50 Hz data collection
 	}
 	motor[leftBack] = maxLeftPower; //turn into own function
 	motor[leftFrontMid] = maxLeftPower;
 	motor[rightBack] = maxRightPower;
 	motor[rightFrontMid] = maxRightPower;
-	//Iterm = 0;
 	while(abs((rightDist)) < 0.7*abs(encoderDist)) //trap in while loop until escape conditions are met
 	{
 		leftDist = abs(SensorValue[leftDrive]);
 		rightDist = abs(SensorValue[rightDrive]);
 
 		sleep(20); //50 Hz data collection
-	} //WIP
-	//Iterm = 0;
+	}
 	while(abs(rightDist) < 0.15*abs(encoderDist)) //trap in while loop until escape conditions are met
 	{
 		leftDist = abs(SensorValue[leftDrive]);
 		rightDist = abs(SensorValue[rightDrive]);
 		desiredLeftPower = ((1 - ((abs(leftDist)) / (0.15*abs(encoderDist)))) + 0.1) * maxLeftPower;
 		desiredRightPower = ((1 - ((abs(leftDist)) / (0.15*abs(encoderDist)))) + 0.1) * maxRightPower;
-		//float rightPower = desiredPower;
 		motor[leftBack] = maxLeftPower; //turn into own function
 		motor[leftFrontMid] = maxLeftPower;
 		motor[rightBack] = maxRightPower;
@@ -398,11 +381,6 @@ void segDrive(float leftPower, float rightPower, float encoderDist)
 		leftDist = abs(SensorValue[leftDrive]);
 		rightDist = abs(SensorValue[rightDrive]);
 	}
-	/*motor[leftBack] = -0.2*leftPower;
-	motor[leftFrontMid] = -0.2*leftPower;
-	motor[rightBack] = -0.2*rightPower;
-	motor[rightFrontMid] = -0.2*rightPower;
-	wait(0.05);*/
 	motor[leftBack] = 0;
 	motor[leftFrontMid] = 0;
 	motor[rightBack] = 0;
@@ -488,7 +466,6 @@ void raiseMob(float time)
 
 void moveCone(float power, float time)
 {
-	//motor[coneRoll] = 15; //hold cone in roller
 	motor[coneLift] = power;
 	motor[coneLiftSec] = power;
 	wait(time); //raise cone lift
@@ -722,7 +699,6 @@ void secondCone()
 	motor[coneLiftSec] = 100;
 	wait(0.2);
 	motor[coneRoll] = 0;
-	//startTask(holdConeLift);
 }
 
 
@@ -1026,20 +1002,6 @@ void runAuton()
 			else
 			{
 				driveWithRight(-127, -10, 900); //THE THIRD VALUE IS DISTANCE. MAY NEED TO BE EDITED***
-				/*stopTask(holdConeLift);
-				motor[coneLift] = -40;
-				motor[coneLiftSec] = -40;
-				wait(0.3);
-				motor[coneLift] = coneLiftHoldPower;
-				motor[coneLiftSec] = coneLiftHoldPower;
-				motor[coneRoll] = -120; //drop cone
-				wait(0.3);
-				motor[coneLift] = 60;
-				motor[coneLiftSec] = 60;
-				wait(0.3);
-				motor[coneLift] = coneLiftHoldPower;
-				motor[coneLiftSec] = coneLiftHoldPower;
-				motor[coneRoll] = 0;*/
 				startTask(holdConeLift);
 				driveWithLeft(-90, 90, 220); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				drive(120, 120, 100);
@@ -1251,20 +1213,6 @@ void runAuton()
 			else
 			{
 				driveWithLeft(-10, -127, 900); //THE THIRD VALUE IS DISTANCE. MAY NEED TO BE EDITED***
-				/*stopTask(holdConeLift);
-				motor[coneLift] = -40;
-				motor[coneLiftSec] = -40;
-				wait(0.3);
-				motor[coneLift] = coneLiftHoldPower;
-				motor[coneLiftSec] = coneLiftHoldPower;
-				motor[coneRoll] = -120; //drop cone
-				wait(0.3);
-				motor[coneLift] = 60;
-				motor[coneLiftSec] = 60;
-				wait(0.3);
-				motor[coneLift] = coneLiftHoldPower;
-				motor[coneLiftSec] = coneLiftHoldPower;
-				motor[coneRoll] = 0;*/
 				startTask(holdConeLift);
 				driveWithLeft(90, -90, 220); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				drive(120, 120, 100);
@@ -1412,9 +1360,22 @@ void runAuton()
 			motor[coneLiftSec] = 0;
 		}
 	}
-	else
+	else // defense auton selected
 	{
-		driveTime(127, 127, 5.5);
+		if(select == 'a') //curve to left then forward
+		{
+			driveTime(50, 127, 1);
+			driveTime(127, 127, 4.5);
+		}
+		else if(select == 'b') //curve to right then forward
+		{
+			driveTime(127, 50, 1);
+			driveTime(127, 127, 4.5);
+		}
+		else if(select == 'c') //straight forward
+		{
+			driveTime(127, 127, 5.5);
+		}
 	}
 }
 
