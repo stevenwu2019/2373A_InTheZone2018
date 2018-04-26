@@ -1545,9 +1545,13 @@ task usercontrol()
 		{
 			motor[lift] = -127;
 		}
-		else if(abs(vexRT[Ch2Xmtr2]) >= 20)
+		else if(vexRT[Btn5UXmtr2] == 1)
 		{
-			motor[lift] = vexRT[Ch2Xmtr2];
+			motor[lift] = 127;
+		}
+		else if(vexRT[Btn5DXmtr2] == 1)
+		{
+			motor[lift] = -127;
 		}
 		else
 		{
