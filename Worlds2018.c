@@ -672,8 +672,8 @@ task statConeLift()
 		}
 		else
 		{
-			motor[coneLift] = 16;
-			motor[coneLiftSec] = 16;
+			motor[coneLift] = 10;
+			motor[coneLiftSec] = 10;
 		}
 	}
 }
@@ -1103,9 +1103,10 @@ void runAuton()
 				motor[coneLiftSec] = coneLiftHoldPower;
 				motor[coneRoll] = 0;
 				startTask(holdConeLift);
-				segDriveWithLeft(-90, 90, 250); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
+				//segDriveWithLeft(-90, 90, 250); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				if(zone == 20)
 				{
+					segDriveWithLeft(-90, 90, 250);
 					driveTime(127, 127, 1.3);
 					driveTime(80, 80, 0.5);
 					motor[leftFrontMid] = 10;
@@ -1115,6 +1116,8 @@ void runAuton()
 				}
 				else if(zone == 10)
 				{
+					segDrive(70, 70, 130);
+					segDriveWithLeft(-90, 90, 250);
 					driveTime(60, 60, 0.5);
 					motor[leftFrontMid] = 10;
 					motor[leftBack] = 10;
@@ -1146,7 +1149,8 @@ void runAuton()
 			lowerMob(0.8); //drop mobile goal
 			wait(0.1);
 			driveTime(-40, -40, 0.75);
-			driveTime(-127, -127, 0.8);
+			driveTime(-127, -127, 0.5);
+			driveTime(-127, -60, 0.6);
 			motor[lift] = 0;
 			motor[coneLift] = -120;
 			motor[coneLiftSec] = -120;
