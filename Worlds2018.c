@@ -660,12 +660,12 @@ task statConeLift()
 {
 	while(true)
 	{
-		if(SensorValue[coneLiftSens] < 600)
+		if(SensorValue[coneLiftSens] < 640)
 		{
 			motor[coneLift] = 80;
 			motor[coneLiftSec] = 80;
 		}
-		else if(SensorValue[coneLiftSens] > 630)
+		else if(SensorValue[coneLiftSens] > 670)
 		{
 			motor[coneLift] = -90;
 			motor[coneLiftSec] = -90;
@@ -1032,7 +1032,7 @@ void runAuton()
 			driveTime(-50, -50, 0.2);
 			wait(1.2);
 			setRoller(-70);
-			wait(0.5);
+			wait(1.5);
 			setRoller(0);
 			stopTask(statConeLift);
 			startTask(holdConeLift);
@@ -1043,7 +1043,7 @@ void runAuton()
 				driveWithRight(10, 120, 420);
 				driveTime(80, 80, 0.7);
 				trapDriveStraight(-100, 15);
-				segDriveWithLeft(100, -100, 170);
+				segDriveWithLeft(100, -100, 145); //TARGET
 				startTask(lowerMobMulti);
 				wait(0.4);
 				trapDriveStraight(100, 1100);
@@ -1086,7 +1086,7 @@ void runAuton()
 			trapDriveStraight(-100, 450);
 			if(zone != 5)
 			{
-				segDriveWithRightCondition(-127, -10, 950, 4); //timeout of 4 seconds April 10
+				segDriveWithRightCondition(-127, -10, 910, 4); //timeout of 4 seconds April 10
 				drive(-60, -60, 120);
 				stopTask(holdConeLift);
 				motor[coneLift] = -40;
@@ -1357,7 +1357,8 @@ void runAuton()
 			lowerMob(0.8); //drop mobile goal
 			wait(0.1);
 			driveTime(-40, -40, 0.75);
-			driveTime(-127, -127, 0.8);
+			driveTime(-127, -127, 0.5);
+			driveTime(-60, -127, 0.6);
 			motor[lift] = 0;
 			motor[coneLift] = -120;
 			motor[coneLiftSec] = -120;
@@ -1398,9 +1399,9 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-bool reversed = false;
+bool reversed = true;
 bool antidrop = false;
-bool testing = false; //true to enable 8R, false to disable
+bool testing = true; //true to enable 8R, false to disable
 bool usingAntigrav = true;
 int desiredPos = 0;
 int currentPos = 0;
@@ -1524,15 +1525,16 @@ task usercontrol()
 		{
 			motor[coneRoll] = 127;
 			antidrop = true;
+			clearTimer(T3);
 		}
 		else if(vexRT[Btn7D] == 1 || vexRT[Btn6DXmtr2] == 1)
 		{
 			motor[coneRoll] = -127;
 			antidrop = false;
 		}
-		else if(antidrop)
+		else if(antidrop && time1[T3] < 3000)
 		{
-			motor[coneRoll] = 14;
+			motor[coneRoll] = 10;
 		}
 		else
 		{
