@@ -1086,7 +1086,7 @@ void runAuton()
 			trapDriveStraight(-100, 450);
 			if(zone != 5)
 			{
-				segDriveWithRightCondition(-127, -10, 1100, 4); //timeout of 4 seconds April 10
+				segDriveWithRightCondition(-127, -10, 950, 4); //timeout of 4 seconds April 10
 				drive(-60, -60, 120);
 				stopTask(holdConeLift);
 				motor[coneLift] = -40;
@@ -1418,7 +1418,8 @@ task HPConeLift()
 	bool outOfRange = true;
 	if(curVal < 710 || curVal > 740) outOfRange = true;
 	else outOfRange = false;
-	while(outOfRange)
+	clearTimer(T1);
+	while(outOfRange && time1[T1] < 2000)
 	{
 		if(curVal < 710)
 		{
@@ -1434,11 +1435,7 @@ task HPConeLift()
 		if(curVal < 710 || curVal > 740) outOfRange = true;
 		else outOfRange = false;
 	}
-	if(!outOfRange)
-	{
-		startTask(holdConeLift);
-		stopTask(HPConeLift);
-	}
+	stopTask(HPConeLift);
 }
 
 task usercontrol()
@@ -1563,17 +1560,17 @@ task usercontrol()
 			runAuton();
 			//trapDriveStraight(100, 2500);
 			//drive(100, 100, 2500);
-		//segDriveWithLeft(-90, 90, 350);
+			//segDriveWithLeft(-90, 90, 350);
 		}
 		if(vexRT[Btn7LXmtr2] == 1)
 		{
 			SensorValue[coneLiftSens] = 0;
 		}
-		if(vexRT[Btn5UXmtr2] == 1)
+		if(vexRT[Btn7UXmtr2] == 1)
 		{
 			//adjustMobGoalLift(1500); //TODO
 		}
-		if(vexRT[Btn5DXmtr2] == 1)
+		if(vexRT[Btn7DXmtr2] == 1)
 		{
 			//startTask(HPConeLift); //TODO
 		}
