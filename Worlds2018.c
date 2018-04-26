@@ -1398,9 +1398,10 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-bool reversed = true;
+bool reversed = false;
 bool antidrop = false;
-bool testing = true; //true to enable 8R, false to disable
+bool testing = false; //true to enable 8R, false to disable
+bool usingAntigrav = true;
 int desiredPos = 0;
 int currentPos = 0;
 
@@ -1480,6 +1481,12 @@ task usercontrol()
 			reversed = !reversed;
 		}
 
+		if(vexRT[Btn8DXmtr2] == 1 && time1[T2] > 700) //reverses driving direction for more intuitive cone handling
+		{
+			clearTimer(T2);
+			usingAntigrav = !usingAntigrav;
+		}
+
 		if(vexRT[Btn5U] == 1) //cone lift, partner controller
 		{
 			motor[coneLift] = -127;
@@ -1497,12 +1504,12 @@ task usercontrol()
 			motor[coneLift] = vexRT[Ch3Xmtr2];
 			motor[coneLiftSec] = vexRT[Ch3Xmtr2];
 		}
-		else if(SensorValue[coneLiftSens] < 300) //MUST INITIALIZE SENSOR, STARTS AT 0, LIFT MUST START IN CONSISTENT POSITION
+		else if(SensorValue[coneLiftSens] < 300 && usingAntigrav) //MUST INITIALIZE SENSOR, STARTS AT 0, LIFT MUST START IN CONSISTENT POSITION
 		{
 			motor[coneLift] = 10;
 			motor[coneLiftSec] = 10;
 		}
-		else if(SensorValue[coneLiftSens] > 600)
+		else if(SensorValue[coneLiftSens] > 600 && usingAntigrav)
 		{
 			motor[coneLift] = -10;
 			motor[coneLiftSec] = -10;
