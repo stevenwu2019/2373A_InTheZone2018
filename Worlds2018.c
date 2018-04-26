@@ -1087,7 +1087,7 @@ void runAuton()
 			if(zone != 5)
 			{
 				segDriveWithRightCondition(-127, -10, 1100, 4); //timeout of 4 seconds April 10
-				drive(-60, -60, 60);
+				drive(-60, -60, 120);
 				stopTask(holdConeLift);
 				motor[coneLift] = -40;
 				motor[coneLiftSec] = -40;
@@ -1103,11 +1103,11 @@ void runAuton()
 				motor[coneLiftSec] = coneLiftHoldPower;
 				motor[coneRoll] = 0;
 				startTask(holdConeLift);
-				segDriveWithLeft(-90, 90, 210); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
+				segDriveWithLeft(-90, 90, 250); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				if(zone == 20)
 				{
 					driveTime(127, 127, 1.3);
-					driveTime(60, 60, 0.5);
+					driveTime(80, 80, 0.5);
 					motor[leftFrontMid] = 10;
 					motor[leftBack] = 10;
 					motor[rightFrontMid] = 10;
@@ -1298,7 +1298,7 @@ void runAuton()
 			if(zone != 5)
 			{
 				segDriveWithLeftCondition(-10, -127, 1100, 4); //timeout of 4 seconds April 10
-				drive(-60, -60, 60);
+				drive(-60, -60, 120);
 				stopTask(holdConeLift);
 				motor[coneLift] = -40;
 				motor[coneLiftSec] = -40;
@@ -1314,7 +1314,7 @@ void runAuton()
 				motor[coneLiftSec] = coneLiftHoldPower;
 				motor[coneRoll] = 0;
 				startTask(holdConeLift);
-				segDriveWithLeft(90, -90, 210); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
+				segDriveWithLeft(100, -100, 250); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				if(zone == 20)
 				{
 					driveTime(127, 127, 1.3);
@@ -1502,13 +1502,13 @@ task usercontrol()
 		}
 		else if(SensorValue[coneLiftSens] < 300) //MUST INITIALIZE SENSOR, STARTS AT 0, LIFT MUST START IN CONSISTENT POSITION
 		{
-			motor[coneLift] = 16;
-			motor[coneLiftSec] = 16;
+			motor[coneLift] = 10;
+			motor[coneLiftSec] = 10;
 		}
 		else if(SensorValue[coneLiftSens] > 600)
 		{
-			motor[coneLift] = -16;
-			motor[coneLiftSec] = -16;
+			motor[coneLift] = -10;
+			motor[coneLiftSec] = -10;
 		}
 		else
 		{
@@ -1528,7 +1528,7 @@ task usercontrol()
 		}
 		else if(antidrop)
 		{
-			motor[coneRoll] = 15;
+			motor[coneRoll] = 14;
 		}
 		else
 		{
@@ -1559,6 +1559,7 @@ task usercontrol()
 			runAuton();
 			//trapDriveStraight(100, 2500);
 			//drive(100, 100, 2500);
+		//segDriveWithLeft(-90, 90, 350);
 		}
 		if(vexRT[Btn7LXmtr2] == 1)
 		{
