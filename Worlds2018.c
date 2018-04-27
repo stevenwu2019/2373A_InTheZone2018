@@ -1090,10 +1090,10 @@ void runAuton()
 			startTask(holdConeLift);
 			wait(0.4);
 			startTask(lowerMobMulti);
-			trapDriveStraight(110, 1550);
+			trapDriveStraight(110, 1610);
 			raiseMob(0.3); //pick up mobile goal
 			startTask(raiseMobMulti);
-			trapDriveStraight(-100, 450);
+			trapDriveStraight(-100, 510);
 			if(zone != 5)
 			{
 				segDriveWithRightCondition(-127, -10, 910, 4); //timeout of 4 seconds April 10
