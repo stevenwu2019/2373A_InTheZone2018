@@ -1331,7 +1331,7 @@ void runAuton()
 				motor[coneLiftSec] = coneLiftHoldPower;
 				motor[coneRoll] = 0;
 				startTask(holdConeLift);
-				segDriveWithLeft(100, -100, 265); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
+				segDriveWithLeft(100, -100, 280); //turn to 20 point //THIS IS ROTATION. THIRD VALUE IS DISTANCE.***
 				if(zone == 20)
 				{
 					driveTime(127, 127, 1.3);
